@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync");
-const Listing = require("../models/listing");
+const Listing = require("../models/Listing");
 const {isLoggedIn, isOwner,validateListings}= require("../views/middleware.js");
 const listingController = require("../controllers/listings");
 
@@ -20,7 +20,7 @@ wrapAsync(listingController.createListing));
 
 
 // ==========================================
-// 2. New Route
+// 2. New Route h
 // ==========================================
 router.get("/new", isLoggedIn,listingController.renderNewForm);
 
