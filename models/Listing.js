@@ -19,7 +19,7 @@ const listingSchema = new Schema({
     country: String,
     category : {
         type:String,
-        enum : ["Trending", " Rooms"," Iconic Cities", "Mountains"," Castles", "Amazing Pools","Camping","Farms","Arctic","Domes","Boats"] ,
+        enum : ["Trending", "Rooms","Iconic Cities", "Mountains","Castles", "Amazing Pools","Camping","Farms","Arctic","Domes","Boats"] ,
         required:true,
         default: "Trending" 
       },
