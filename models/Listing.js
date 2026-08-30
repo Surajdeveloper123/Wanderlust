@@ -2,6 +2,7 @@
    const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
+const { required } = require("joi");
 
 const listingSchema = new Schema({
     title: { 
@@ -16,6 +17,11 @@ const listingSchema = new Schema({
     price: Number,
     location: String,
     country: String,
+    category : {
+        type:String,
+        enum : ["Trending", " Rooms"," Iconic Cities", "Mountains"," Castles", "Amaring Pools","Camping","Farms","Arctic","Domes","Boats"] ,
+        required:true
+    },
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: "Review",

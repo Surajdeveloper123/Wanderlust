@@ -2,24 +2,50 @@
 const Listing = require("../models/Listing.js");
 
 // INDEX ROUTE (WITH SEARCH FILTER)
+// module.exports.index = async (req, res) => {
+//     try {
+//         let { search } = req.query;
+//         let allListings;
+
+//         if (search && search.trim() !== "") {
+//             search = search.trim();
+//             allListings = await Listing.find({
+//                 $or: [
+//                     { title: { $regex: search, $options: "i" } },
+//                     { location: { $regex: search, $options: "i" } },
+//                     { country: { $regex: search, $options: "i" } }
+//                 ]
+//             });
+//         } else {
+//             allListings = await Listing.find({});
+//         }
+
+//         res.render("listings/index", { allListings });
+//     } catch (err) {
+//         console.error("Error fetching listings:", err);
+//         req.flash("error", "Something went wrong!");
+//         res.redirect("/listings");
+//     }
+// };
 module.exports.index = async (req, res) => {
     try {
-        let { search } = req.query;
-        let allListings;
+        let { search, category } = req.query;
+        let query = {};
 
         if (search && search.trim() !== "") {
             search = search.trim();
-            allListings = await Listing.find({
-                $or: [
-                    { title: { $regex: search, $options: "i" } },
-                    { location: { $regex: search, $options: "i" } },
-                    { country: { $regex: search, $options: "i" } }
-                ]
-            });
-        } else {
-            allListings = await Listing.find({});
+            query.$or = [
+                { title: { $regex: search, $options: "i" } },
+                { location: { $regex: search, $options: "i" } },
+                { country: { $regex: search, $options: "i" } }
+            ];
         }
 
+        if (category) {
+            query.category = category;
+        }
+
+        let allListings = await Listing.find(query);
         res.render("listings/index", { allListings });
     } catch (err) {
         console.error("Error fetching listings:", err);
@@ -27,7 +53,6 @@ module.exports.index = async (req, res) => {
         res.redirect("/listings");
     }
 };
-
 module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
 };

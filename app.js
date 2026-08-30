@@ -382,7 +382,7 @@ app.use(
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto:{
-        secret: "mysupersecretcode",
+        secret: process.env.SESSION_SECRET || "mysupersecretcode",
     },
     touchAfter: 24*3600,
 });
