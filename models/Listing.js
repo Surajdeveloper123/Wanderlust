@@ -23,6 +23,12 @@ const listingSchema = new Schema({
         required:true,
         default: "Treanding" 
       },
+      bookings:[
+        {
+            type:Schema.Types.ObjectId,
+            ref:"Booking"
+        }
+      ],
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: "Review",

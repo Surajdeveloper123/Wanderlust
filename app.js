@@ -309,6 +309,8 @@ const ExpressError = require("./utils/ExpressError.js");
 const listings = require("./routes/Listing.js");
 const reviews = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const bookingRouter = require("./routes/booking.js");
+
 
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -496,6 +498,7 @@ app.use(
     "/",
     userRouter
 );
+app.use("/listings/:id/bookings", bookingRouter);
 
 
 // ==========================================

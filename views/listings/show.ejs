@@ -28,7 +28,7 @@
             <p class="card-text"><%= listing.description %></p>
 
             <p class="card-text">
-                &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %>
+                &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %> / night
             </p>
 
             <p class="card-text"><%= listing.location %></p>
@@ -37,13 +37,37 @@
     </div>
 
     <!-- ========================================= -->
+    <!-- BOOKING FORM SECTION -->
+    <!-- ========================================= -->
+    <div class="col-6 offset-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Book this listing</h5>
+                <form action="/listings/<%= listing._id %>/bookings" method="POST" novalidate class="needs-validation">
+                    <div class="mb-3">
+                        <label for="fromDate" class="form-label">Check-in Date</label>
+                        <input type="date" name="booking[fromDate]" id="fromDate" class="form-control" required>
+                        <div class="invalid-feedback">Please select a check-in date</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="toDate" class="form-label">Check-out Date</label>
+                        <input type="date" name="booking[toDate]" id="toDate" class="form-control" required>
+                        <div class="invalid-feedback">Please select a check-out date</div>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================= -->
     <!-- EDIT / DELETE -->
     <!-- ========================================= -->
     <% if (currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
-        <div class="btns mb-3">
+        <div class="btns mb-3 col-6 offset-3">
             <a
                 href="/listings/<%= listing._id %>/edit"
-                class="btn btn-dark col-1 offset-3 edit-btn"
+                class="btn btn-dark col-2 edit-btn"
             >
                 Edit
             </a>
@@ -53,7 +77,7 @@
                 action="/listings/<%= listing._id %>?_method=DELETE"
                 class="d-inline"
             >
-                <button class="btn btn-dark offset-5">Delete</button>
+                <button class="btn btn-dark ms-2">Delete</button>
             </form>
         </div>
     <% } %>
