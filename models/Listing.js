@@ -21,7 +21,7 @@ const listingSchema = new Schema({
         type:String,
         enum : ["Trending", " Rooms"," Iconic Cities", "Mountains"," Castles", "Amaring Pools","Camping","Farms","Arctic","Domes","Boats"] ,
         required:true,
-        default: "Treanding" 
+        default: "Trending" 
       },
       bookings:[
         {
