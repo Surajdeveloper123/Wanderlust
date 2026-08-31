@@ -203,7 +203,7 @@ app.use(
     "/",
     userRouter
 );
-app.use("/listings/:id/bookings", bookingRouter);
+app.use("/bookings", bookingRouter);
 
 
 // ==========================================
