@@ -83,6 +83,34 @@
     <% } %>
 
     <!-- ========================================= -->
+    <!-- PROPERTY BOOKINGS SECTION -->
+    <!-- ========================================= -->
+    <div class="col-8 offset-3 mb-3">
+        <hr />
+        <h4><b>Property Bookings</b></h4>
+        <% if (locals.bookings && bookings.length > 0) { %>
+            <div class="list-group mt-3">
+                <% for (let booking of bookings) { %>
+                    <div class="list-group-item mb-2 rounded shadow-sm">
+                        <p class="mb-1">
+                            <b>Booked by:</b> <%= booking.user ? booking.user.username : "Guest" %>
+                        </p>
+                        <p class="mb-1 text-muted">
+                            <b>Check-in:</b> <%= booking.fromDate ? booking.fromDate.toDateString() : "N/A" %> | 
+                            <b>Check-out:</b> <%= booking.toDate ? booking.toDate.toDateString() : "N/A" %>
+                        </p>
+                        <p class="mb-1 text-success">
+                            <b>Total Price:</b> &#8377; <%= booking.totalPrice ? booking.totalPrice.toLocaleString("en-IN") : "N/A" %>
+                        </p>
+                    </div>
+                <% } %>
+            </div>
+        <% } else { %>
+            <p class="text-muted">No bookings for this property yet.</p>
+        <% } %>
+    </div>
+
+    <!-- ========================================= -->
     <!-- REVIEWS -->
     <!-- ========================================= -->
     <div class="col-8 offset-3 mb-3">
