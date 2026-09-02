@@ -4,9 +4,10 @@ const wrapAsync = require("../utils/wrapAsync");
 const { isLoggedIn } = require("../views/middleware");
 const bookingController = require("../controllers/bookings");
 
-router.get("/", isLoggedIn, wrapAsync(async (req, res) => {
-    let allBookings = await Booking.find({}).populate("listing");
-    res.render("bookings/index.ejs", { allBookings });
-}));
+// 1. View all bookings page
+router.get("/bookings", isLoggedIn, wrapAsync(bookingController.index));
+
+// 2. Create booking post route
+router.post("/listings/:id/bookings", isLoggedIn, wrapAsync(bookingController.createBooking));
 
 module.exports = router;
