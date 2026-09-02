@@ -1,6 +1,19 @@
 const Booking = require("../models/booking");
 const Listing = require("../models/Listing");
 
+// MY BOOKINGS INDEX ROUTE
+module.exports.index = async (req, res) => {
+    try {
+        const bookings = await Booking.find({ user: req.user._id }).populate("listing");
+        res.render("bookings/index.ejs", { bookings });
+    } catch (err) {
+        console.error("Error fetching user bookings:", err);
+        req.flash("error", "Could not load your bookings!");
+        res.redirect("/listings");
+    }
+};
+
+// CREATE BOOKING
 module.exports.createBooking = async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
