@@ -1,4 +1,4 @@
-<% layout("/layouts/boilerplate") %>
+<!-- <% layout("/layouts/boilerplate") %>
 <div class="row mt-3">
   <h3>Your Booked Listings</h3>
   <% for(let booking of allBookings) { %>
@@ -12,4 +12,35 @@
       </div>
     </div>
   <% } %>
+</div> -->
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+    <div class="col-8 offset-2">
+        <h3><b>Your Booked Listings</b></h3>
+        <br>
+        <div class="row">
+            <% for(let booking of allBookings) { %>
+                <div class="card col-md-5 ms-3 mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <b><%= booking.listing ? booking.listing.title : "Listing" %></b>
+                        </h5>
+                        <p class="card-text text-muted mb-1">
+                            <b>Check-in:</b> <%= booking.fromDate ? booking.fromDate.toDateString() : "N/A" %>
+                        </p>
+                        <p class="card-text text-muted mb-1">
+                            <b>Check-out:</b> <%= booking.toDate ? booking.toDate.toDateString() : "N/A" %>
+                        </p>
+                        <p class="card-text text-success">
+                            <b>Total Price:</b> &#8377; <%= booking.totalPrice ? booking.totalPrice.toLocaleString("en-IN") : "N/A" %>
+                        </p>
+                        <% if(booking.listing) { %>
+                            <a href="/listings/<%= booking.listing._id %>" class="btn btn-dark btn-sm">View Listing</a>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
 </div>
