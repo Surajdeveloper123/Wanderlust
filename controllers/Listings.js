@@ -199,7 +199,7 @@
 //     res.redirect("/listings");
 // };
 const Listing = require("../models/Listing.js");
-const Booking = require("../models/Booking.js"); // Booking model import karein
+const Booking = require("../models/booking.js"); // Booking model import karein
 
 // INDEX ROUTE (WITH SEARCH FILTER)
 module.exports.index = async (req, res) => {
