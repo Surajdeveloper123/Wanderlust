@@ -45,7 +45,7 @@ module.exports.showListing = async (req, res) => {
             },
         })
         .populate("owner")
-        .populate:({
+        .populate({
 
             path:"bookings",
             populate:{path: "user"}
