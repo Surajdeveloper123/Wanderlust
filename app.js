@@ -204,7 +204,7 @@ app.use(
     userRouter
 );
 app.use("/",bookingRouter);
-app.use("/listings/:id/bookings", bookingRouter);
+
 
 
 // ==========================================
