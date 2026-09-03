@@ -98,27 +98,50 @@ module.exports.createListing = async (req, res) => {
     }
 
     // Geocoding via LocationIQ API
-    try {
-        const queryLocation = `${req.body.listing.location}, ${req.body.listing.country}`;
-        const mapToken = process.env.MAP_TOKEN;
-        const response = await fetch(
-            `https://api.locationiq.com/v1/search?key=${mapToken}&q=${encodeURIComponent(queryLocation)}&format=json`
-        );
-        const geoData = await response.json();
+    // try {
+    //     const queryLocation = `${req.body.listing.location}, ${req.body.listing.country}`;
+    //     const mapToken = process.env.MAP_TOKEN;
+    //     const response = await fetch(
+    //         `https://api.locationiq.com/v1/search?key=${mapToken}&q=${encodeURIComponent(queryLocation)}&format=json`
+    //     );
+    //     const geoData = await response.json();
 
-        if (geoData && geoData.length > 0) {
-            newListing.geometry = {
-                type: "Point",
-                coordinates: [parseFloat(geoData[0].lon), parseFloat(geoData[0].lat)]
-            };
-        } else {
-            // Default: New Delhi
-            newListing.geometry = { type: "Point", coordinates: [77.2090, 28.6139] };
-        }
-    } catch (err) {
-        console.warn("Geocoding failed, setting default coordinates:", err);
+    //     if (geoData && geoData.length > 0) {
+    //         newListing.geometry = {
+    //             type: "Point",
+    //             coordinates: [parseFloat(geoData[0].lon), parseFloat(geoData[0].lat)]
+    //         };
+    //     } else {
+    //         // Default: New Delhi
+    //         newListing.geometry = { type: "Point", coordinates: [77.2090, 28.6139] };
+    //     }
+    // } catch (err) {
+    //     console.warn("Geocoding failed, setting default coordinates:", err);
+    //     newListing.geometry = { type: "Point", coordinates: [77.2090, 28.6139] };
+    // }
+    // Geocoding via LocationIQ API
+try {
+    const queryLocation = `${req.body.listing.location}, ${req.body.listing.country}`;
+    const mapToken = process.env.MAP_TOKEN;
+    const response = await fetch(
+        `https://api.locationiq.com/v1/search?key=${mapToken}&q=${encodeURIComponent(queryLocation)}&format=json`
+    );
+    const geoData = await response.json();
+
+    // Check karein ki response valid array hai ya nahi
+    if (Array.isArray(geoData) && geoData.length > 0) {
+        newListing.geometry = {
+            type: "Point",
+            coordinates: [parseFloat(geoData[0].lon), parseFloat(geoData[0].lat)]
+        };
+    } else {
+        // Fallback agar location na mile
         newListing.geometry = { type: "Point", coordinates: [77.2090, 28.6139] };
     }
+} catch (err) {
+    console.warn("Geocoding failed, setting default coordinates:", err);
+    newListing.geometry = { type: "Point", coordinates: [77.2090, 28.6139] };
+}
 
     await newListing.save();
     req.flash("success", "New Listing Created!");
