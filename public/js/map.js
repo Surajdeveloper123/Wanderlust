@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             container: mapElement,
             style: mapStyle,
             center: coordinates,
-            zoom: 12,
+            zoom: 9,
             attributionControl: true
         });
     } catch (error) {
