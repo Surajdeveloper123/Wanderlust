@@ -26,7 +26,7 @@ const listingSchema = new Schema({
       bookings:[
         {
             type:Schema.Types.ObjectId,
-            ref:"Booking"
+            ref:"Booking",
         }
       ],
     reviews: [{
