@@ -35,33 +35,51 @@ module.exports.renderNewForm = (req, res) => {
 };
 
 // SHOW LISTING (FIXED: Populating Bookings and Users)
-module.exports.showListing = async (req, res) => {
+// module.exports.showListing = async (req, res) => {
+//     let { id } = req.params;
+//     const listing = await Listing.findById(id)
+//         .populate({
+//             path: "reviews",
+//             populate: {
+//                 path: "author"
+//             },
+//         })
+//         .populate("owner")
+//        // .populate({
+
+//         //    path:"bookings",
+//    //         populate:{path: "user"}
+//    //     });
+
+//     if (!listing) {
+//         req.flash("error", "Listing you requested for does not exist!");
+//         return res.redirect("/listings");
+//     }
+
+//     // Is listing ki saari bookings fetch karein aur user details populate karein
+//     const bookings = await Booking.find({ listing: id }).populate("user");
+
+//     res.render("listings/show.ejs", { listing, bookings });
+// };
+     module.exports.showListing = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id)
         .populate({
             path: "reviews",
-            populate: {
-                path: "author"
-            },
+            populate: { path: "author" },
         })
-        .populate("owner")
-        .populate({
-
-            path:"bookings",
-            populate:{path: "user"}
-        });
+        .populate("owner");
 
     if (!listing) {
-        req.flash("error", "Listing you requested for does not exist!");
+        req.flash("error", "Listing you requested does not exist!");
         return res.redirect("/listings");
     }
 
-    // Is listing ki saari bookings fetch karein aur user details populate karein
-    const bookings = await Booking.find({ listing: id }).populate("user");
+    // String conversion ke sath bookings fetch karein taaki mismatch na ho
+    const bookings = await Booking.find({ listing: id.toString() }).populate("user");
 
     res.render("listings/show.ejs", { listing, bookings });
 };
-
 // CREATE LISTING (WITH LOCATIONIQ GEOCODING)
 module.exports.createListing = async (req, res) => {
     const newListing = new Listing(req.body.listing);
