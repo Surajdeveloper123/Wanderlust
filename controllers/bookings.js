@@ -37,7 +37,7 @@ module.exports.createBooking = async (req, res) => {
     newBooking.listing = id;
     newBooking.totalPrice = totalPrice;
 
-    listing.bookings.push(newBooking);
+    listing.bookings.push(newBooking._id);
 
     await newBooking.save();
     await listing.save();
