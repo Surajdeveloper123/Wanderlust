@@ -222,7 +222,7 @@ body {
     margin-top: 1rem;
     margin-bottom: 2rem;
     position: relative !important;
-    overflow: hidden !important;
+    /* overflow: hidden !important; */
 }
 
 /* Custom Airbnb House Marker Pin */
